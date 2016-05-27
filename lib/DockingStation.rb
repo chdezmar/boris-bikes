@@ -13,7 +13,8 @@ class DockingStation
 
 	def release_bike
 		fail "There are no bikes" if empty?
-		bikes.pop unless bikes.last.broken?
+		fail "The bike is broken" if bikes.last.broken?
+		bikes.pop
 	end
 
 	def dock (bike)
@@ -21,7 +22,7 @@ class DockingStation
 		bikes << bike
 	end
 
-private
+ private
 
 attr_reader :bikes
 

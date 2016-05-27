@@ -3,6 +3,9 @@
 require 'DockingStation'
 
 describe DockingStation do
+
+	let(:bike) {double :bike}
+
 	it "responds to release_bike" do
 		expect(subject).to respond_to :release_bike
 	end
@@ -17,52 +20,36 @@ describe DockingStation do
 	end
 
 	describe "#release_bike" do
-		#it "releases the working bike" do
-			#bike = subject.release_bike
-			#expect(bike).to be_working
-		#end
+		it "releases the working bike" do
+			allow(bike).to receive(:broken?).and_return(false)
+			subject.dock(bike)
+			released_bike = subject.release_bike
+			expect(released_bike).not_to be_broken
+		end
 
 
 		it "releases a bike if bike is not broken" do
-			bike = Bike.new
-			bike.report_broken
+			allow(bike).to receive(:broken?).and_return(true)
 			subject.dock(bike)
-			expect(subject.release_bike).to eq nil
+			expect {subject.release_bike}.to raise_error("The bike is broken")
 		end
 
 		it "raises an error when there are no bikes" do
 			expect {subject.release_bike}.to raise_error("There are no bikes")
-			end
+		end
 	end
 
 	it "responds to dock" do
 		expect(subject).to respond_to(:dock).with(1).argument
 	end
 
-
-
 	describe "#dock" do
-
-		# it "docks any bike (broken or not)" do
-		# 	bike = Bike.new.report_broken
-		# 	subject.dock(bike)
-		# 	expect(subject.dock(bike)).to eq subject.bikes.pop
-		# 	end
 
 		it "raises and error when the docking station is full" do
 			subject.capacity.times {subject.dock(Bike.new)}
 			expect {subject.dock(Bike.new)}.to raise_error("This station is full")
-			end
+		end
 	end
 
-	# it "returns a docked bike" d
-	# 	bike = Bike.new
-	# 	subject.dock(bike)
-	# 	expect(subject.bikes.last).to eq bike
-	# end
-
-	#it "responds to bike method" do
-	#	expect(subject).to respond_to :bikes
-	#end
 
 end
