@@ -5,12 +5,12 @@ class Van
 
 attr_reader :broken_bikes
 
-def initialize
-  @broken_bikes = []
-end
+  def initialize
+    @van_storage = []
+  end
 
   def receives_bikes(broken_bikes)
-    broken_bikes
+    dock
   end
 
 
