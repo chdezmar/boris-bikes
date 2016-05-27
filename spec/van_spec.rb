@@ -4,12 +4,12 @@ require 'van'
 
 describe Van do
 
-  it "takes bikes" do
-    expect(subject).to respond_to(:takes).with(1).argument
+  it "receives bikes" do
+    expect(subject).to respond_to(:receives_bikes).with(1).argument
   end
 
-  it "takes the broken bikes from the dock" do
-    expect(subject.takes(released_bike)).to eq DockingStation.release_bike
+  it "receives broken bikes from DockingStation" do
+    expect(subject.receives_bikes(broken_bikes)).to eq bikes.release_bike
   end
 
 end

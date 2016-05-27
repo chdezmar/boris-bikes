@@ -1,9 +1,16 @@
+require_relative "DockingStation"
 
 
 class Van
 
-  def takes(released_bike)
+attr_reader :broken_bikes
 
+def initialize
+  @broken_bikes = []
+end
+
+  def receives_bikes(broken_bikes)
+    broken_bikes
   end
 
 
